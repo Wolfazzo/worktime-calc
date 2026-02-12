@@ -16,16 +16,14 @@ export const TimeInputUnit: React.FC<TimeInputUnitProps> = ({ value, onChange, m
 
   // Handle click outside and touch events to close dropdown
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
     };
   }, []);
 
@@ -64,10 +62,6 @@ export const TimeInputUnit: React.FC<TimeInputUnitProps> = ({ value, onChange, m
                 key={opt}
                 type="button"
                 onMouseDown={(e) => e.preventDefault()}
-                onTouchEnd={(e) => {
-                  e.preventDefault();
-                  handleSelect(opt);
-                }}
                 onClick={() => handleSelect(opt)}
                 className={`w-full min-h-[44px] py-3 text-center text-base sm:text-sm font-medium hover:bg-violet-50 active:bg-violet-100 transition-colors touch-manipulation ${value === opt ? 'bg-violet-100 text-violet-700' : 'text-slate-600'
                   }`}
