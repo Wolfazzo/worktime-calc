@@ -1,0 +1,5 @@
+{
+  "name": "WorkTime Calc",
+  "description": "A professional tool to calculate the time duration between a start and end time with precise inputs.",
+  "requestFramePermissions": []
+}
