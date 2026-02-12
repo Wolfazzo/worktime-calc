@@ -1,6 +1,7 @@
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import legacy from '@vitejs/plugin-legacy';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
@@ -11,7 +12,8 @@ export default defineConfig(({ mode }) => {
       host: '0.0.0.0',
     },
     build: {
-      target: 'es2020',
+      target: 'chrome70',
+      cssTarget: 'chrome70',
       rollupOptions: {
         output: {
           manualChunks: {
@@ -21,7 +23,14 @@ export default defineConfig(({ mode }) => {
         }
       }
     },
-    plugins: [react()],
+    plugins: [
+      react(),
+      legacy({
+        targets: ['chrome >= 70', 'ios >= 12', 'not IE 11'],
+        renderLegacyChunks: true,
+        polyfills: true
+      })
+    ],
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
